@@ -132,6 +132,24 @@ frappe.ui.form.on('ERPNext Price Estimation', {
             frm.events.calculate_totals(frm);
         }
     },
+    website: function(frm) {
+        if (frm.doc.website) {
+            add_efforts(frm, 'website_details', 'Website');
+        } else {
+            frm.clear_table("website_details");
+            frm.refresh_field("website_details");
+            frm.events.calculate_totals(frm);
+        }
+    },
+    communication: function(frm) {
+        if (frm.doc.communication) {
+            add_efforts(frm, 'communication_details', 'Communication');
+        } else {
+            frm.clear_table("communication_details");
+            frm.refresh_field("communication_details");
+            frm.events.calculate_totals(frm);
+        }
+    },
     customization: function(frm) {
         if (frm.doc.customization) {
             add_efforts(frm, 'customizations_details', 'Customization');
@@ -151,7 +169,11 @@ frappe.ui.form.on('ERPNext Price Estimation', {
         frm.doc.total_customization_effort = 0;
 
         let module_tables = [
-            "accounts_details", "buying_details", "stock_details", "crm_details", "payroll_details", "selling_details", "hrms_details", "projects_details", "manufacturing_details", "setup_details", "customization_details", "healthcare_details", "education_details",
+            "accounts_details", "buying_details", "stock_details", "crm_details", 
+            "payroll_details", "selling_details", "hrms_details", "projects_details", 
+            "manufacturing_details", "setup_details", "customization_details", 
+            "healthcare_details", "education_details", "website_details", 
+            "communication_details"
         ];
 
         $.each(frm.doc.customization_estimations || [], function(i, d) {
@@ -190,7 +212,12 @@ estimation_details_object = {
     }
 }
 
-const modules = ["accounts_details", "buying_details", "stock_details", "crm_details", "payroll_details", "selling_details", "hrms_details", "projects_details", "manufacturing_details", "setup_details", "healthcare_details", "education_details"];
+const modules = [
+    "accounts_details", "buying_details", "stock_details", "crm_details", 
+    "payroll_details", "selling_details", "hrms_details", "projects_details", 
+    "manufacturing_details", "setup_details", "healthcare_details", 
+    "education_details", "website_details", "communication_details"
+];
 
 modules.forEach((module) => {
     estimation_details_object[module + "_remove"] = function(frm, cdt, cdn) {
